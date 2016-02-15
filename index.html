@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MyNote</title>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script type="text/javascript" src="marked.min.js"></script>
+</head>
+<body>
+	<div class="grid">
+		<div class="row title">
+			<div class="col-1 tag"><p id="tag-title">Notebook</p></div>
+			<div class="col-1" id="note-tag"></div>
+			<div class="col-1 note-list">
+				<a href="#" id="new-note" class="button">New</a>
+			</div>
+			<div id="note-name" class="col-2">
+					
+			</div>
+			<div class="col-1" id="edit-button">
+			
+			</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-1 tag">
+				<ul id="tag-list">
+				</ul>
+				<a href="#" id="add-tag" class="button">New</a>
+			</div>
+			<div class="col-2 note-list">
+				<ul id="note-list">
+					
+				</ul>
+			</div>
+			<div class="col-3" id="note-content">
+				
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="app.js"></script>
+</body>
+</html>
