@@ -1,224 +1,228 @@
 * {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -ms-box-sizing: border-box;
-    box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
 }
 
 body{
-	margin: 0px;
-	padding: 0px;
-	font-family: "Microsoft Yahei",sans-serif;
+  margin: 0px;
+  padding: 0px;
+  font-family: Roboto, sans-serif;
 }
 
 ul{
-	list-style: none;
-	padding: 0px;
+  list-style: none;
+  padding: 0px;
 }
 
 a{
-	text-decoration: none;
-	display: block;
+  text-decoration: none;
+  display: block;
 }
 
 .grid {
-	height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
 }
 
 .row {
-    width: 100%;
-    display: -webkit-flex;
-    display: flex;
+  width: 100%;
+  display: -webkit-flex;
+  display: flex;
 }
 
 .col-1{
-	width:16.66%;
+  width:16.66%;
 }
 
 .col-2{
-	width:33.33%;
+  width:33.33%;
 }
 
 .col-3{
-	width: 50%;
+  width: 50%;
 }
 
 .col-4{
-	width:66.66%;
+  width:66.66%;
 }
 
 .col-5{
-	width:83.33%;
+  width:83.33%;
 }
 
 .col-6{
-	width: 100%;
+  width: 100%;
 }
 
 .title{
-	height:200px;
-	line-height: 200px;
-	font-size:40px;
+  height:200px;
+  line-height: 200px;
+  font-size:40px;
 }
 
 .button{
-	width: 80px;
-	height: 40px;
-	line-height: 40px;
-	color: white;
-	margin: 40% 0px 0px 40%;
-	font-size: 20px;
-	font-weight: bolder;
-	text-align: center;
-	background-color: #1e90ff;
-	border-radius: 5px;
+  width: 80px;
+  height: 40px;
+  line-height: 40px;
+  color: white;
+  margin: 40% 0px 0px 40%;
+  font-size: 20px;
+  font-weight: bolder;
+  text-align: center;
+  background-color: #1e90ff;
+  border-radius: 5px;
 }
 
 .tag{
-	background-color: black;
-	color: gray;
-	border-right: 10px #eeeeee solid;
+  background-color: black;
+  color: gray;
+  border-right: 10px #eeeeee solid;
 }
 
 #tag-title{
-	text-align: center;
-	width:100%;
+  text-align: center;
+  width:100%;
 }
 
 #tag-list{
-	font-size: 22px;
+  font-size: 22px;
 }
 
 #tag-list li a{
-	height:40px;
-	text-indent: 15%;
-	line-height: 40px;
-	color: gray;
-	margin-bottom: 5px;
-	width:100%;
+  height:40px;
+  text-indent: 15%;
+  line-height: 40px;
+  color: gray;
+  margin-bottom: 5px;
+  width:100%;
 }
 
 .tag .active .tag-name{
-	color: white !important;
-	background-color: gray;
+  color: white !important;
+  background-color: gray;
 }
 
 #edit-tag{
-	height: 40px;
-	width:100%;
-	font-size: 22px;
-	text-indent: 15%;
+  height: 40px;
+  width:100%;
+  font-size: 22px;
+  text-indent: 15%;
 }
 
 #add-tag{
-	margin-top: 20px;
-	text-align: center;
-	width: 40%;
+  margin-top: 20px;
+  text-align: center;
+  width: 40%;
 }
 
 .delete-tag,.edit-tag{
-	text-indent: 0px !important;
-	text-align: center;
-	margin: 0px;
-	background-color: #ee5c42;
-	width: 100%;
-	color:black !important;
+  text-indent: 0px !important;
+  text-align: center;
+  margin: 0px;
+  background-color: #ee5c42;
+  width: 100%;
+  color:black !important;
 }
 
 .edit-tag{
-	background-color: #AEEEEE;
+  background-color: #AEEEEE;
 }
 
 .note-list{
-	border-right: 10px #eeeeee solid;
+  border-right: 10px #eeeeee solid;
 }
 
 .note-list .active{
-	border: 1px #1e90ff solid;
-	background-color: white !important;
+  border: 1px #1e90ff solid;
+  background-color: white !important;
 }
 
 #note-tag{
-	text-indent: 20px;
+  text-indent: 20px;
 }
 
 #note-list{
-	padding: 0px 10px;
-	min-height:400px;
+  padding: 0px 10px;
+  min-height:400px;
 }
 
 #note-list li{
-	background-color: #eeeeee;
-	margin-bottom: 10px;
-	padding: 5px;
+  background-color: #eeeeee;
+  margin-bottom: 10px;
+  padding: 5px;
 }
 
 #note-list li h3{
-	margin-bottom:5px;
-	margin-top: 0px;
+  margin-bottom:5px;
+  margin-top: 0px;
 }
 
 #note-list li a{
-	height:60px;
-	color:black;
+  height:60px;
+  color:black;
 }
 
 .delete-note{
-	margin: 0px 0px 3px 50%;
-	width:40%;
-	height:30px !important;
-	line-height: 25px;
-	background-color: #ee5c42;
-	border-radius: 5px;
+  margin: 0px 0px 3px 50%;
+  width:40%;
+  height:30px !important;
+  line-height: 25px;
+  background-color: #ee5c42;
+  border-radius: 5px;
 }
 
 #note-name,#edit-button{
-	background-color: #ee5c42;
-	color: white;
-	height: 200px;
-	line-height: 200px;
+  background-color: #ee5c42;
+  color: white;
+  height: 200px;
+  line-height: 200px;
 }
 
 #note-name{
-	text-indent: 20px;
-	line-height: 200px;
+  text-indent: 20px;
+  line-height: 200px;
 }
 
 #edit-note{
-	background-color: #AEEEEE;
-	color: black;
+  background-color: #AEEEEE;
+  color: black;
 }
 
 #note-content{
-	padding: 20px 20px;
-	overflow-y:visible;
+  padding: 20px 20px;
+  overflow-y:visible;
 }
 
 #input-title{
-	font-size: 20px;
-	border-style: none;
-	outline: none;
+  font-size: 20px;
+  border-style: none;
+  outline: none;
 }
 
 #save-button,#cancel-button{
-	margin: 0px;
-	display: inline-block;
+  margin: 0px;
+  display: inline-block;
 }
 
 #cancel-button{
-	background-color: #ee5c42;
+  background-color: #ee5c42;
 }
 
 #edit-area{
-	margin-top: -70px;
-	border-style: none;
-	overflow-y: visible;
-	font-size:18px;
-	font-family: "Arial";
-	width: 100%;
-	resize: none;
-	height: 500px;
-	max-height: 500px;
-	outline: none;
+  margin-top: -70px;
+  border-style: none;
+  overflow-y: visible;
+  font-size:18px;
+  font-family: "Arial";
+  width: 100%;
+  resize: none;
+  height: 500px;
+  max-height: 500px;
+  outline: none;
 }
