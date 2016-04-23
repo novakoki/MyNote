@@ -1,59 +1,116 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>MyNote</title>
-	<meta http-equiv="content-type" content="text/html;charset=utf-8">
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MyNote</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="./css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script type="text/javascript" src="marked.min.js"></script>
 </head>
+
 <body>
-	<div class="grid">
-		<div class="row title">
-			<p id="tag-title" class="col-1 tag">Notebook</h1>
-			<p id="note-tag" class="col-2 note-list">Alice</p>
-			<p id="note-name" class="col-3">Hello</p>
-		</div>
-		<div class="row">
-			<div class="col-1 tag">
-				<ul id="tag-list">
-					<li><a href="#">Alice</a></li>
-					<li><a href="#">Bob</a></li>
-					<li><a href="#">Cindy</a></li>
-					<li><a href="#">David</a></li>
-				</ul>
-			</div>
-			<div class="col-2 note-list">
-				<ul id="note-list">
-					<li>
-						<a href="#">
-						<h3>Hello</h3>
-						Hello,world!
-						</a>
-					</li>
-					<li>
-						<a href="#">
-						<h3>Hello</h3>
-						Hello,world!
-						</a>
-					</li>
-					<li>
-						<a href="#">
-						<h3>Hello</h3>
-						Hello,world!
-						</a>
-					</li>
-					<li>
-						<a href="#">
-						<h3>Hello</h3>
-						Hello,world!
-						</a>
-					</li>
-				</ul>
-			</div>
-			<div class="col-3">
-				<p id="note-content">Hello,world!</p>
-			</div>
-		</div>
-	</div>
+  <div class="container row">
+      <!-- I want templates !!! -->
+
+      <div class="tag-list">
+        <h1 class="title center">
+          <!-- Notebook Name -->
+          MyNote
+        </h1>
+        <ul>
+          <!-- Tag List -->
+          <li><a href="#" class="tag-name">Ajax</a></li>
+          <li><a href="#" class="tag-name">Bash</a></li>
+          <li><a href="#" class="tag-name">CSS</a></li>
+          <li><a href="#" class="tag-name">Django</a></li>
+          <li><a href="#" class="tag-name">Emmet</a></li>
+          <li><a href="#" class="tag-name">Firefox</a></li>
+          <li><a href="#" class="tag-name">Golang</a></li>
+          <li><a href="#" class="tag-name">HTML</a></li>
+          <li><a href="#" class="tag-name">Internet Explore</a></li>
+          <li><a href="#" class="tag-name">JavaScript</a></li>
+          <li><a href="#" class="tag-name">Java</a></li>
+          <li><a href="#" class="tag-name">Lua</a></li>
+          <li><a href="#" class="tag-name">Markdown</a></li>
+          <li><a href="#" class="tag-name">Node.js</a></li>
+          <li><a href="#" class="tag-name">Objective-C</a></li>
+          <li><a href="#" class="tag-name">Python</a></li>
+        </ul>
+        <a href="#" class="button new-tag">+</a>
+      </div>
+
+      <div class="note-list">
+        <div class="row">
+          <h1 class="col-4 title center">
+            <!-- Current Tag Name -->
+            Ajax
+          </h1>
+          <div class="center col-2">
+            <a href="#" class="button new-note">New</a>
+          </div>
+        </div>
+        
+        <ul>
+          <!-- Note List -->
+          <li>
+            <a href="#">
+              <h3>Hello, Ajax</h3>
+              <p>Grumpy wizards make toxic brew for the evil Queen and Jack. One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked.</p>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <h3>Hello, Ajax</h3>
+              <p>Grumpy wizards make toxic brew for the evil Queen and Jack. One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked.</p>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <h3>Hello, Ajax</h3>
+              <p>Grumpy wizards make toxic brew for the evil Queen and Jack. One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked.</p>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <h3>Hello, Ajax</h3>
+              <p>啊大家阿斯空间啊塑封机疯狂的司法积分卡所肩负开放的所肩负咖啡店发k阿加莎发送分级分类阿凡提所肩负考虑叫阿送风口劳动竞赛发阿斯积分卡辣椒粉加咖啡叫阿疗法阿飞均大幅刻录机阿曼法律的咖啡拉</p>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <h3>Hello, Ajax</h3>
+              <p>啊大家阿斯空间啊塑封机疯狂的司法积分卡所肩负开放的所肩负咖啡店发k阿加莎发送分级分类阿凡提所肩负考虑叫阿送风口劳动竞赛发阿斯积分卡辣椒粉加咖啡叫阿疗法阿飞均大幅刻录机阿曼法律的咖啡拉</p>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <h3>Hello, Ajax</h3>
+              <p>啊大家阿斯空间啊塑封机疯狂的司法积分卡所肩负开放的所肩负咖啡店发k阿加莎发送分级分类阿凡提所肩负考虑叫阿送风口劳动竞赛发阿斯积分卡辣椒粉加咖啡叫阿疗法阿飞均大幅刻录机阿曼法律的咖啡拉</p>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="note-content">
+        <div class="row">
+          <h1 class="col-4 title center">
+          <!-- Current Note Name -->
+          Hello, Ajax
+        </h1>
+        <div class="col-2 control-area center">
+          <!-- Control Buttons -->
+          <a href="#" class="button edit-note">Edit</a>
+        </div>
+        </div>
+        <article><!-- Note Content -->Grumpy wizards make toxic brew for the evil Queen and Jack. One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked.
+Grumpy wizards make toxic brew for the evil Queen and Jack. One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked.
+Grumpy wizards make toxic brew for the evil Queen and Jack. One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked.
+Grumpy wizards make toxic brew for the evil Queen and Jack. One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked.
+Grumpy wizards make toxic brew for the evil Queen and Jack. One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked.
+        </article>
+      </div>
+  </div>
 </body>
+
 </html>

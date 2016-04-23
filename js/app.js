@@ -64,6 +64,33 @@
 	    TagListView.init(model.getTags());
 	    NoteListView.init(model.getNotes(), model.getCurrentTag());
 	    NoteContentView.init(model.getCurrentNote());
+	    this.handle();
+	  },
+	  handle: function () {
+	    document.querySelector('.tag-list ul').addEventListener('click', function (e) {
+	      if (e.target.tagName === 'A') {
+	        model.setCurrentTag(e.target.innerText);
+	        NoteListView.render(model.getNotes(), e.target.innerText);
+	        model.setCurrentNote(null);
+	        NoteContentView.render(null);
+	      }
+	    });
+	    document.querySelector('.note-list ul').addEventListener('click', function (e) {
+	      var target = e.target;
+	      if (target.tagName === 'H3' || target.tagName === 'P') {
+	        target = target.parentNode;
+	      }
+	      if (target.tagName === 'A') {
+	        var notes = model.getNotes();
+	        for (var item of notes) {
+	          if (item.name === target.firstChild.innerText) {
+	            model.setCurrentNote(item);
+	            NoteContentView.render(item);
+	            break;
+	          }
+	        }
+	      }
+	    });
 	  }
 	};
 
@@ -195,7 +222,7 @@
 
 	module.exports = {
 	  init: function (tags) {
-	    this.tagList = document.getElementById('tag-list');
+	    this.tagList = document.querySelector('.tag-list ul');
 	    this.render(tags);
 	  },
 	  render: function (tags) {
@@ -221,9 +248,10 @@
 	  },
 	  newTag: function (tag) {
 	    var elem = document.createElement('li');
-	    elem.innerHTML = '<div class="row"><div class="col-4"><a href="#" class="tag-name">'
-	      + tag
-	      + '</a></div><div class="col-1"><a href="#" class="edit-tag button">T</a></div><div class="col-1"><a href="#" class="delete-tag button">X</a></div></div>';
+	    elem.innerHTML = '<a href="#" class="tag-name">' + tag + '</a>';
+	    // elem.innerHTML = '<div class="row"><div class="col-4"><a href="#" class="tag-name">'
+	    //   + tag
+	    //   + '</a></div><div class="col-1"><a href="#" class="edit-tag button">T</a></div><div class="col-1"><a href="#" class="delete-tag button">X</a></div></div>';
 	    // if (tag === controller.getCurrentTag()) {
 	    //   elem.className = 'active';
 	    // }
@@ -273,25 +301,25 @@
 
 	module.exports = {
 	  init: function (notes, currentTag) {
-	    this.tagName = document.getElementById('note-tag');
-	    this.noteList = document.getElementById('note-list');
-	    this.new_note = document.getElementById('new-note');
+	    this.tagName = document.querySelector('.note-list h1');
+	    this.noteList = document.querySelector('.note-list ul');
+	    this.newNoteButton = document.querySelector('.new-note');
 	    this.render(notes, currentTag);
 	  },
 	  render: function (notes, currentTag) {
-	    this.new_note.onclick = function () {
-	      this.onclick = 'null';
-	      NoteEditView.init();
-	      NoteEditView.addNote();
-	    };
+	    // this.new_note.onclick = function () {
+	    //   this.onclick = 'null';
+	    //   NoteEditView.init();
+	    //   NoteEditView.addNote();
+	    // };
 
 	    this.tagName.innerHTML = currentTag || '';
 	    this.noteList.innerHTML = '';
 	    // bad
 	    if (!currentTag) {
-	      this.new_note.style.display = 'none';
+	      this.newNoteButton.style.display = 'none';
 	    } else {
-	      this.new_note.style.display = 'block';
+	      this.newNoteButton.style.display = 'block';
 	    }
 	    if (notes) {
 	      for (var i = 0; i < notes.length; i++) {
@@ -301,14 +329,7 @@
 	  },
 	  newNote: function (note) {
 	    var elem = document.createElement('li');
-	    elem.innerHTML = '<div class="row"><h3 class="col-5">'
-	      + note.name
-	      + '</h3>'
-	      + '<div class="col-1"><a href="#" class="button delete-note">x</a></div></div>';
-	    if (note.content.length > 100)
-	      elem.innerHTML += '<a href="#">' + note.content.substring(0, 80).replace(/[^A-Za-z0-9\ \,\;\.\?\u2E80-\uFE4F]/ig, '') + '...</a>';
-	    else
-	      elem.innerHTML += '<a href="#">' + note.content.replace(/[^A-Za-z0-9\ \,\;\.\?\u2E80-\uFE4F]/ig, '') + '</a>';
+	    elem.innerHTML = '<a href="#"><h3>' + note.name + '</h3><p>' + note.content + '</p></a>';
 	    // if (note == controller.getCurrentNote())
 	    //   elem.className = 'active';
 	    // elem.lastChild.addEventListener('click', (function (noteCopy) {
@@ -337,32 +358,28 @@
 
 	module.exports = {
 	  init: function (note) {
-	    this.noteContent = document.getElementById('note-content');
-	    this.noteName = document.getElementById('note-name');
-	    this.editButton = document.getElementById('edit-button');
+	    this.noteContent = document.querySelector('.note-content article');
+	    this.noteName = document.querySelector('.note-content h1');
+	    this.controlArea = document.querySelector('.control-area');
 	    this.render(note);
 	  },
 	  render: function (note) {
-	    // bad
-	    this.noteName.style['background-color'] = '#ee5c42';
-	    this.editButton.style['background-color'] = '#ee5c42';
 	    if (note) {
+	      this.controlArea = '<a href="#" class="button edit-note">Edit</a>';
 	      this.noteName.innerHTML = note.name;
 	      this.noteContent.innerHTML = marked(note.content);
-	      this.editButton.innerHTML = '<a href="#" id="edit-note" class="button">Edit</a>';
-	      document.getElementById('edit-note').addEventListener('click', function () {
-	        NoteEditView.init();
-	        NoteEditView.editNote();
-	      });
-	    }
-	    else {
+	      // document.getElementById('edit-note').addEventListener('click', function () {
+	      //   NoteEditView.init();
+	      //   NoteEditView.editNote();
+	      // });
+	    } else {
 	      this.clear();
 	    }
 	  },
 	  clear: function () {
 	    this.noteName.innerHTML = '';
 	    this.noteContent.innerHTML = '';
-	    this.editButton.innerHTML = '';
+	    this.controlArea.innerHTML = '';
 	  }
 	};
 

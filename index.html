@@ -4,43 +4,54 @@
 <head>
   <title>MyNote</title>
   <meta http-equiv="content-type" content="text/html;charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" type="text/css" href="./css/style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script type="text/javascript" src="marked.min.js"></script>
 </head>
 
 <body>
-  <div class="grid" style="height: 100%; position: relative;">
-    <div class="row title">
-      <div class="col-1 tag">
-        <p id="tag-title">Notebook</p>
+  <div class="container row">
+      <!-- I want templates !!! -->
+      <div class="tag-list">
+        <h1 class="title center">
+          <!-- Notebook Name -->
+          MyNote
+        </h1>
+        <ul>
+          <!-- Tag List -->
+        </ul>
+        <a href="#" class="button new-tag">+</a>
       </div>
-      <div class="col-1" id="note-tag"></div>
-      <div class="col-1 note-list">
-        <a href="#" id="new-note" class="button">New</a>
+
+      <div class="note-list">
+        <div class="row">
+          <h1 class="col-4 title center">
+          <!-- Current Tag Name -->
+          </h1>
+          <div class="center col-2">
+            <a href="#" class="button new-note">New</a>
+          </div>
+        </div>
+        
+        <ul>
+          <!-- Note List -->
+        </ul>
+        
       </div>
-      <div id="note-name" class="col-2">
 
+      <div class="note-content">
+        <div class="row">
+          <h1 class="col-4 title center">
+            <!-- Current Note Name -->
+          </h1>
+          <div class="col-2 control-area center">
+            <!-- Control Buttons -->
+          </div>
+        </div>
+        <article>
+          <!-- Note Content -->
+        </article>
       </div>
-      <div class="col-1" id="edit-button">
-
-      </div>
-    </div>
-  <div class="row" style="position: absolute; top: 200px; bottom: 0;">
-    <div class="col-1 tag">
-      <ul id="tag-list">
-      </ul>
-      <a href="#" id="add-tag" class="button">New</a>
-    </div>
-    <div class="col-2 note-list">
-      <ul id="note-list">
-
-      </ul>
-    </div>
-    <div class="col-3" id="note-content">
-
-    </div>
-  </div>
   </div>
   <script type="text/javascript" src="./js/app.js"></script>
 </body>
