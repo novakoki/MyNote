@@ -1,4 +1,5 @@
-// Todo: Bind event here
+// TODO: Model.onchange = trigger(View.update)
+// TODO: Bind event here
 var model = require('./model');
 var TagListView = require('./TagList');
 var NoteListView = require('./NoteList');
@@ -37,5 +38,16 @@ module.exports = {
         }
       }
     });
+    document.querySelector('.new-tag').addEventListener('click', function () {
+      var elem = TagListView.newTag('');
+      elem.innerHTML = '<input required="required" autofocus="autofocus" onfocus="this.select();" />';
+      elem.firstChild.onkeypress = function (e) {
+        // TODO: Empty validation
+        if (e.keyCode === 13) {
+          model.addTag(this.value);
+          TagListView.render();
+        }
+      }
+    })
   }
 };

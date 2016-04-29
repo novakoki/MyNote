@@ -52,7 +52,8 @@
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// Todo: Bind event here
+	// TODO: Model.onchange = trigger(View.update)
+	// TODO: Bind event here
 	var model = __webpack_require__(2);
 	var TagListView = __webpack_require__(3);
 	var NoteListView = __webpack_require__(4);
@@ -91,6 +92,17 @@
 	        }
 	      }
 	    });
+	    document.querySelector('.new-tag').addEventListener('click', function () {
+	      var elem = TagListView.newTag('');
+	      elem.innerHTML = '<input required="required" autofocus="autofocus" onfocus="this.select();" />';
+	      elem.firstChild.onkeypress = function (e) {
+	        // TODO: Empty validation
+	        if (e.keyCode === 13) {
+	          model.addTag(this.value);
+	          TagListView.render();
+	        }
+	      }
+	    })
 	  }
 	};
 
