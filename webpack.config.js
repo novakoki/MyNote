@@ -3,4 +3,4 @@ module.exports = {
   output: {
     filename: './js/app.js'
   }
-};
+}

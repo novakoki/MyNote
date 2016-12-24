@@ -1,2 +1,2 @@
-var controller = require('./controller');
-controller.init();
+var controller = require('./controller')
+controller.init()

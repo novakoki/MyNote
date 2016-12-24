@@ -1,6 +1,13 @@
 {
-    "extends": "airbnb/legacy",
+    "extends": "standard",
+    "env": {
+        "browser": true
+    },
     "plugins": [
-      "react"
-    ]
+        "promise",
+        "standard"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 5
+    }
 }
