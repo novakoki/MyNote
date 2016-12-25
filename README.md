@@ -1,4 +1,4 @@
-MyNote (Refactoring)
+MyNote
 ===
 A personal knowledge manager
 ---

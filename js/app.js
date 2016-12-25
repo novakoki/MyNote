@@ -114,6 +114,9 @@
 	  },
 	  // Given name and content of a new note
 	  addNote: function (name, content) {
+	    if (name === '') {
+	      alert('Title can\'t be empty')
+	    }
 	    var note = {
 	      name: name,
 	      content: content
@@ -132,6 +135,9 @@
 	    this.writeData()
 	  },
 	  updateNote: function (name, content) {
+	    if (name === '') {
+	      alert('Title can\'t be empty')
+	    }
 	    currentNote.name = name
 	    currentNote.content = content
 	    this.writeData()
@@ -286,7 +292,6 @@
 	  },
 	  newTag: function (tag) {
 	    var elem = document.createElement('li')
-	    // elem.innerHTML = '<a href="#" class="tag-name">' + tag + '</a>'
 	    elem.innerHTML = '<div class="row"><div class="col-5"><a href="#" class="tag-name">' + tag + '</a></div><div class="col-1"><a href="#" class="delete-tag button">X</a></div></div>'
 	    $tagList.appendChild(elem)
 	    return elem
@@ -307,12 +312,6 @@
 	  $noteList: $noteList,
 	  $newNoteButton: $newNoteButton,
 	  render: function (notes, currentTag) {
-	    // this.new_note.onclick = function () {
-	    //   this.onclick = 'null'
-	    //   NoteEditView.init()
-	    //   NoteEditView.addNote()
-	    // }
-
 	    $tagName.innerHTML = currentTag || ''
 	    $noteList.innerHTML = ''
 	    // bad
@@ -329,23 +328,7 @@
 	  },
 	  newNote: function (note) {
 	    var elem = document.createElement('li')
-	    elem.innerHTML = '<a href="#" class="note-name"><h3>' + note.name + '</h3><p>' + note.content + '</p></a>'
-	    // if (note == controller.getCurrentNote())
-	    //   elem.className = 'active'
-	    // elem.lastChild.addEventListener('click', (function (noteCopy) {
-	    //   return function () {
-	    //     controller.setCurrentNote(noteCopy)
-	    //     NoteListView.render()
-	    //     NoteContentView.render()
-	    //   }
-	    // })(note))
-	    // elem.firstChild.lastChild.firstChild.addEventListener('click', (function (noteCopy) {
-	    //   return function () {
-	    //     controller.removeNote(noteCopy)
-	    //     NoteListView.render()
-	    //     NoteContentView.render()
-	    //   }
-	    // })(note))
+	    elem.innerHTML = '<a href="#" class="note-name"><h3>' + note.name + '</h3><i class="delete-note">x</i><p>' + note.content + '</p></a>'
 	    $noteList.appendChild(elem)
 	    return elem
 	  }
@@ -358,8 +341,8 @@
 
 	var marked = __webpack_require__(7)
 	var $this = document.querySelector('.note-content')
-	var $name = $this.querySelector('article')
-	var $content = $this.querySelector('h1')
+	var $name = $this.querySelector('h1')
+	var $content = $this.querySelector('article')
 	var $editNote = $this.querySelector('.edit-note')
 
 	module.exports = {
@@ -1685,12 +1668,30 @@
 
 	var bindEvt = function () {
 	  NoteListView.$noteList.addEventListener('click', function (e) {
-	    var target = e.currentTarget
-	    console.log(target)
-	    if (target.className === 'note-name') {
-	      var notes = model.getNotes()
-	      for (var index in notes) {
-	        var item = notes[index]
+	    var target = e.target
+	    var notes = model.getNotes()
+	    var index = 0
+	    var item = null
+	    if (target.className === 'delete-note') {
+	      var name = target.parentNode.firstChild.innerText
+	      for (index in notes) {
+	        item = notes[index]
+	        if (item.name === name) {
+	          if (model.isCurrentNote(item)) {
+	            NoteEditView.clear()
+	            NoteContentView.render()
+	          }
+	          model.removeNote(item)
+	          NoteListView.render(model.getNotes(), model.getCurrentTag())
+	          break
+	        }
+	      }
+	    } else if (target.className === 'note-name' || target.parentNode.className === 'note-name') {
+	      if (target.parentNode.className === 'note-name') {
+	        target = target.parentNode
+	      }
+	      for (index in notes) {
+	        item = notes[index]
 	        if (item.name === target.firstChild.innerText) {
 	          model.setCurrentNote(item)
 	          NoteEditView.clear()
@@ -1743,6 +1744,8 @@
 	      $editArea.value = note.content
 	      this.editMode = true
 	    } else {
+	      $inputTitle.value = ''
+	      $editArea.value = ''
 	      this.editMode = false
 	    }
 	    $this.style.display = 'block'
@@ -1751,30 +1754,6 @@
 	  clear: function () {
 	    $this.style.display = 'none'
 	  }
-	  // addNote: function () {
-	  //   this.save_button.onclick = function () {
-	  //     controller.addNote(NoteEditView.input_title.value, NoteEditView.edit_area.value);
-	  //     NoteListView.render();
-	  //     NoteContentView.render();
-	  //   };
-	  //   this.cancel_button.onclick = function () {
-	  //     NoteContentView.clear();
-	  //     NoteListView.render();
-	  //   };
-	  // },
-	  // editNote: function () {
-	  //   var note = controller.getCurrentNote();
-	  //   this.input_title.value = note.name;
-	  //   this.edit_area.value = note.content;
-	  //   this.save_button.onclick = function () {
-	  //     controller.updateNote(NoteEditView.input_title.value, NoteEditView.edit_area.value);
-	  //     NoteListView.render();
-	  //     NoteContentView.render();
-	  //   };
-	  //   this.cancel_button.onclick = function () {
-	  //     NoteContentView.render();
-	  //   };
-	  // }
 	}
 
 
