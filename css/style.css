@@ -215,6 +215,7 @@ a {
 .note-list li {
   background-color: #eee;
   margin-bottom: 15px;
+  position: relative;
 }
 
 .note-list li h3 {
@@ -240,12 +241,11 @@ a {
 }
 
 .delete-note{
-  margin: 0px 0px 3px 50%;
-  width:40%;
-  height:30px !important;
-  line-height: 25px;
-  background-color: #ee5c42;
-  border-radius: 5px;
+  position: absolute;
+  right: 10px;
+  top: 3px;
+  font-style: normal;
+  color: #ee5c42;
 }
 
 /* Note Content */

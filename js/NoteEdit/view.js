@@ -23,6 +23,8 @@ module.exports = {
       $editArea.value = note.content
       this.editMode = true
     } else {
+      $inputTitle.value = ''
+      $editArea.value = ''
       this.editMode = false
     }
     $this.style.display = 'block'
@@ -31,28 +33,4 @@ module.exports = {
   clear: function () {
     $this.style.display = 'none'
   }
-  // addNote: function () {
-  //   this.save_button.onclick = function () {
-  //     controller.addNote(NoteEditView.input_title.value, NoteEditView.edit_area.value);
-  //     NoteListView.render();
-  //     NoteContentView.render();
-  //   };
-  //   this.cancel_button.onclick = function () {
-  //     NoteContentView.clear();
-  //     NoteListView.render();
-  //   };
-  // },
-  // editNote: function () {
-  //   var note = controller.getCurrentNote();
-  //   this.input_title.value = note.name;
-  //   this.edit_area.value = note.content;
-  //   this.save_button.onclick = function () {
-  //     controller.updateNote(NoteEditView.input_title.value, NoteEditView.edit_area.value);
-  //     NoteListView.render();
-  //     NoteContentView.render();
-  //   };
-  //   this.cancel_button.onclick = function () {
-  //     NoteContentView.render();
-  //   };
-  // }
 }

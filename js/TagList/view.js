@@ -20,7 +20,6 @@ module.exports = {
   },
   newTag: function (tag) {
     var elem = document.createElement('li')
-    // elem.innerHTML = '<a href="#" class="tag-name">' + tag + '</a>'
     elem.innerHTML = '<div class="row"><div class="col-5"><a href="#" class="tag-name">' + tag + '</a></div><div class="col-1"><a href="#" class="delete-tag button">X</a></div></div>'
     $tagList.appendChild(elem)
     return elem
