@@ -1,7 +1,7 @@
 var marked = require('marked')
 var $this = document.querySelector('.note-content')
-var $name = $this.querySelector('article')
-var $content = $this.querySelector('h1')
+var $name = $this.querySelector('h1')
+var $content = $this.querySelector('article')
 var $editNote = $this.querySelector('.edit-note')
 
 module.exports = {

@@ -37,6 +37,9 @@ module.exports = {
   },
   // Given name and content of a new note
   addNote: function (name, content) {
+    if (name === '') {
+      alert('Title can\'t be empty')
+    }
     var note = {
       name: name,
       content: content
@@ -55,6 +58,9 @@ module.exports = {
     this.writeData()
   },
   updateNote: function (name, content) {
+    if (name === '') {
+      alert('Title can\'t be empty')
+    }
     currentNote.name = name
     currentNote.content = content
     this.writeData()

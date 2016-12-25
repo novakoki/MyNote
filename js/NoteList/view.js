@@ -7,12 +7,6 @@ module.exports = {
   $noteList: $noteList,
   $newNoteButton: $newNoteButton,
   render: function (notes, currentTag) {
-    // this.new_note.onclick = function () {
-    //   this.onclick = 'null'
-    //   NoteEditView.init()
-    //   NoteEditView.addNote()
-    // }
-
     $tagName.innerHTML = currentTag || ''
     $noteList.innerHTML = ''
     // bad
@@ -29,23 +23,7 @@ module.exports = {
   },
   newNote: function (note) {
     var elem = document.createElement('li')
-    elem.innerHTML = '<a href="#" class="note-name"><h3>' + note.name + '</h3><p>' + note.content + '</p></a>'
-    // if (note == controller.getCurrentNote())
-    //   elem.className = 'active'
-    // elem.lastChild.addEventListener('click', (function (noteCopy) {
-    //   return function () {
-    //     controller.setCurrentNote(noteCopy)
-    //     NoteListView.render()
-    //     NoteContentView.render()
-    //   }
-    // })(note))
-    // elem.firstChild.lastChild.firstChild.addEventListener('click', (function (noteCopy) {
-    //   return function () {
-    //     controller.removeNote(noteCopy)
-    //     NoteListView.render()
-    //     NoteContentView.render()
-    //   }
-    // })(note))
+    elem.innerHTML = '<a href="#" class="note-name"><h3>' + note.name + '</h3><i class="delete-note">x</i><p>' + note.content + '</p></a>'
     $noteList.appendChild(elem)
     return elem
   }

@@ -53,56 +53,20 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	// TODO: Model.onchange = trigger(View.update)
-	// TODO: Bind event here
+
 	var model = __webpack_require__(2)
-	var TagListView = __webpack_require__(3)
-	var NoteListView = __webpack_require__(4)
-	var NoteContentView = __webpack_require__(5)
+	var TagListController = __webpack_require__(3)
+	var NoteListController = __webpack_require__(8)
+	var NoteContentController = __webpack_require__(10)
+	var NoteEditController = __webpack_require__(11)
 
 	module.exports = {
 	  init: function () {
 	    model.init()
-	    TagListView.init(model.getTags())
-	    NoteListView.init(model.getNotes(), model.getCurrentTag())
-	    NoteContentView.init(model.getCurrentNote())
-	    this.handle()
-	  },
-	  handle: function () {
-	    document.querySelector('.tag-list ul').addEventListener('click', function (e) {
-	      if (e.target.tagName === 'A') {
-	        model.setCurrentTag(e.target.innerText)
-	        NoteListView.render(model.getNotes(), e.target.innerText)
-	        model.setCurrentNote(null)
-	        NoteContentView.render(null)
-	      }
-	    })
-	    document.querySelector('.note-list ul').addEventListener('click', function (e) {
-	      var target = e.target
-	      if (target.tagName === 'H3' || target.tagName === 'P') {
-	        target = target.parentNode
-	      }
-	      if (target.tagName === 'A') {
-	        var notes = model.getNotes()
-	        for (var item of notes) {
-	          if (item.name === target.firstChild.innerText) {
-	            model.setCurrentNote(item)
-	            NoteContentView.render(item)
-	            break
-	          }
-	        }
-	      }
-	    })
-	    document.querySelector('.new-tag').addEventListener('click', function () {
-	      var elem = TagListView.newTag('')
-	      elem.innerHTML = '<input required="required" autofocus="autofocus" onfocus="this.select()" />'
-	      elem.firstChild.onkeypress = function (e) {
-	        // TODO: Empty validation
-	        if (e.keyCode === 13) {
-	          model.addTag(this.value)
-	          TagListView.render()
-	        }
-	      }
-	    })
+	    TagListController.init()
+	    NoteListController.init()
+	    NoteContentController.init()
+	    NoteEditController.init()
 	  }
 	}
 
@@ -230,175 +194,195 @@
 
 /***/ },
 /* 3 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	module.exports = {
-	  init: function (tags) {
-	    this.tagList = document.querySelector('.tag-list ul');
-	    this.render(tags);
-	  },
-	  render: function (tags) {
-	    var i = 0;
-	    this.tagList.innerHTML = '';
-	    if (tags) {
-	      for (i = 0; i < tags.length; i++) {
-	        this.newTag(tags[i]);
+	var model = __webpack_require__(2)
+	var TagListView = __webpack_require__(4)
+	var NoteListView = __webpack_require__(5)
+	var NoteContentView = __webpack_require__(6)
+
+	var bindEvt = function () {
+	  TagListView.$tagList.addEventListener('click', function (e) {
+	    var target = e.target
+	    if (target.className === 'tag-name') {
+	      model.setCurrentTag(target.innerText)
+	      TagListView.render(model.getTags(), model.getCurrentTag())
+	      NoteListView.render(model.getNotes(), target.innerText)
+	      model.setCurrentNote(null)
+	      NoteContentView.render(null)
+	    } else if (target.className.indexOf('delete-tag') !== -1) {
+	      var tag = target.parentNode.parentNode.firstChild.firstChild.innerText
+	      model.removeTag(tag)
+	      TagListView.render(model.getTags(), model.getCurrentTag())
+	      NoteListView.render(model.getNotes(), model.getCurrentNote())
+	    }
+	  })
+
+	  TagListView.$tagList.addEventListener('dblclick', function (e) {
+	    var target = e.target
+	    if (target.className.indexOf('tag-name') !== -1) {
+	      var tag = target.innerText
+	      target.parentNode.innerHTML = '<input type="text" id="edit-tag" autofocus="autofocus" onfocus="this.select()" value="' + tag + '"/>'
+	      document.getElementById('edit-tag').onkeypress = function (e) {
+	        if (e.keyCode === 13) {
+	          if (this.value !== '') {
+	            model.updateTag(tag, this.value)
+	            TagListView.render(model.getTags(), model.getCurrentTag())
+	          } else {
+	            alert('Tag name can\'t be empty!')
+	          }
+	        }
 	      }
 	    }
+	  })
 
-	    // document.getElementById('add-tag').onclick = function () {
-	    //   var elem = TagListView.newTag('');
-	    //   this.onclick = 'null';
-	    //   elem.firstChild.firstChild.innerHTML = '<input type="text" id="edit-tag" required="required" autofocus="autofocus" onfocus="this.select()" />';
-	    //   document.getElementById('edit-tag').addEventListener('keyup', function (e) {
-	    //     if (e.keyCode === 13) {
-	    //       controller.addTag(this.value);
-	    //       TagListView.render();
-	    //     }
-	    //   });
-	    // };
-	  },
-	  newTag: function (tag) {
-	    var elem = document.createElement('li');
-	    elem.innerHTML = '<a href="#" class="tag-name">' + tag + '</a>';
-	    // elem.innerHTML = '<div class="row"><div class="col-4"><a href="#" class="tag-name">'
-	    //   + tag
-	    //   + '</a></div><div class="col-1"><a href="#" class="edit-tag button">T</a></div><div class="col-1"><a href="#" class="delete-tag button">X</a></div></div>';
-	    // if (tag === controller.getCurrentTag()) {
-	    //   elem.className = 'active';
-	    // }
-	    // elem.firstChild.firstChild.firstChild.addEventListener('click', (function (tagCopy) {
-	    //   return function () {
-	    //     controller.setCurrentTag(tagCopy);
-	    //     TagListView.render();
-	    //     NoteListView.render();
-	    //     controller.setCurrentNote(null);
-	    //     NoteContentView.render();
-	    //   };
-	    // })(tag));
-	    // elem.firstChild.firstChild.nextSibling.firstChild.onclick = (function (tagCopy) {
-	    //   return function () {
-	    //     var editButton = document.getElementsByClassName('edit-tag button');
-	    //     console.debug(editButton);
-	    //     for (var i = 0; i < editButton.length; i++) {
-	    //       editButton[i].onclick = 'null';
-	    //       this.parentNode.previousSibling.innerHTML = '<input type="text" id="edit-tag" autofocus="autofocus" onfocus="this.select()" value="' + tagCopy + '"/>';
-	    //       document.getElementById('edit-tag').addEventListener('keyup', (function (tagCopy) {
-	    //         return function (e) {
-	    //           if (e.keyCode == 13) {
-	    //             controller.updateTag(tagCopy, this.value);
-	    //             TagListView.render();
-	    //             NoteListView.render();
-	    //           }
-	    //         };
-	    //         })(tagCopy));
-	    //   }
-	    // })(tag);
-	    // elem.firstChild.lastChild.addEventListener('click', (function (tagCopy) {
-	    //   return function () {
-	    //     controller.removeTag(tagCopy);
-	    //     TagListView.render();
-	    //     NoteListView.render();
-	    //   };
-	    // })(tag));
-	    this.tagList.appendChild(elem);
-	    return elem;
+	  TagListView.$newTagButton.addEventListener('click', function () {
+	    var elem = TagListView.newTag('')
+	    elem.innerHTML = '<input required="required" autofocus="autofocus" onfocus="this.select()" />'
+	    elem.firstChild.onkeypress = function (e) {
+	      if (e.keyCode === 13) {
+	        if (this.value !== '') {
+	          model.addTag(this.value)
+	          TagListView.render(model.getTags(), model.getCurrentTag())
+	        } else {
+	          alert('Tag name can\'t be empty!')
+	        }
+	      }
+	    }
+	  })
+	}
+
+	module.exports = {
+	  init: function () {
+	    TagListView.render(model.getTags(), model.getCurrentTag())
+	    bindEvt()
 	  }
-	};
+	}
 
 
 /***/ },
 /* 4 */
 /***/ function(module, exports) {
 
-	module.exports = {
-	  init: function (notes, currentTag) {
-	    this.tagName = document.querySelector('.note-list h1');
-	    this.noteList = document.querySelector('.note-list ul');
-	    this.newNoteButton = document.querySelector('.new-note');
-	    this.render(notes, currentTag);
-	  },
-	  render: function (notes, currentTag) {
-	    // this.new_note.onclick = function () {
-	    //   this.onclick = 'null';
-	    //   NoteEditView.init();
-	    //   NoteEditView.addNote();
-	    // };
+	var $tagList = document.querySelector('.tag-list ul')
+	var $newTagButton = document.querySelector('.new-tag')
 
-	    this.tagName.innerHTML = currentTag || '';
-	    this.noteList.innerHTML = '';
-	    // bad
-	    if (!currentTag) {
-	      this.newNoteButton.style.display = 'none';
-	    } else {
-	      this.newNoteButton.style.display = 'block';
-	    }
-	    if (notes) {
-	      for (var i = 0; i < notes.length; i++) {
-	        this.newNote(notes[i]);
+	module.exports = {
+	  $tagList: $tagList,
+	  $newTagButton: $newTagButton,
+	  render: function (tags, currentTag) {
+	    var i = 0
+	    var elem = null
+	    $tagList.innerHTML = ''
+	    if (tags) {
+	      for (i = 0; i < tags.length; i++) {
+	        elem = this.newTag(tags[i])
+	        if (tags[i] === currentTag) {
+	          var $tagName = elem.querySelector('.tag-name')
+	          $tagName.className += ' active'
+	        }
 	      }
 	    }
 	  },
-	  newNote: function (note) {
-	    var elem = document.createElement('li');
-	    elem.innerHTML = '<a href="#"><h3>' + note.name + '</h3><p>' + note.content + '</p></a>';
-	    // if (note == controller.getCurrentNote())
-	    //   elem.className = 'active';
-	    // elem.lastChild.addEventListener('click', (function (noteCopy) {
-	    //   return function () {
-	    //     controller.setCurrentNote(noteCopy);
-	    //     NoteListView.render();
-	    //     NoteContentView.render();
-	    //   };
-	    // })(note));
-	    // elem.firstChild.lastChild.firstChild.addEventListener('click', (function (noteCopy) {
-	    //   return function () {
-	    //     controller.removeNote(noteCopy);
-	    //     NoteListView.render();
-	    //     NoteContentView.render();
-	    //   };
-	    // })(note));
-	    this.noteList.appendChild(elem);
-	    return elem;
+	  newTag: function (tag) {
+	    var elem = document.createElement('li')
+	    // elem.innerHTML = '<a href="#" class="tag-name">' + tag + '</a>'
+	    elem.innerHTML = '<div class="row"><div class="col-5"><a href="#" class="tag-name">' + tag + '</a></div><div class="col-1"><a href="#" class="delete-tag button">X</a></div></div>'
+	    $tagList.appendChild(elem)
+	    return elem
 	  }
-	};
+	}
 
 
 /***/ },
 /* 5 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	var marked = __webpack_require__(6)
+	var $tagName = document.querySelector('.note-list h1')
+	var $noteList = document.querySelector('.note-list ul')
+	var $newNoteButton = document.querySelector('.new-note')
+
 	module.exports = {
-	  init: function (note) {
-	    this.noteContent = document.querySelector('.note-content article')
-	    this.noteName = document.querySelector('.note-content h1')
-	    this.controlArea = document.querySelector('.control-area')
-	    this.render(note)
-	  },
-	  render: function (note) {
-	    if (note) {
-	      this.controlArea = '<a href="#" class="button edit-note">Edit</a>'
-	      this.noteName.innerHTML = note.name
-	      this.noteContent.innerHTML = marked(note.content)
-	      // document.getElementById('edit-note').addEventListener('click', function () {
-	      //   NoteEditView.init()
-	      //   NoteEditView.editNote()
-	      // })
+	  $tagName: $tagName,
+	  $noteList: $noteList,
+	  $newNoteButton: $newNoteButton,
+	  render: function (notes, currentTag) {
+	    // this.new_note.onclick = function () {
+	    //   this.onclick = 'null'
+	    //   NoteEditView.init()
+	    //   NoteEditView.addNote()
+	    // }
+
+	    $tagName.innerHTML = currentTag || ''
+	    $noteList.innerHTML = ''
+	    // bad
+	    if (!currentTag) {
+	      $newNoteButton.style.display = 'none'
 	    } else {
-	      this.clear()
+	      $newNoteButton.style.display = 'block'
+	    }
+	    if (notes) {
+	      for (var i = 0; i < notes.length; i++) {
+	        this.newNote(notes[i])
+	      }
 	    }
 	  },
-	  clear: function () {
-	    this.noteName.innerHTML = ''
-	    this.noteContent.innerHTML = ''
-	    this.controlArea.innerHTML = ''
+	  newNote: function (note) {
+	    var elem = document.createElement('li')
+	    elem.innerHTML = '<a href="#" class="note-name"><h3>' + note.name + '</h3><p>' + note.content + '</p></a>'
+	    // if (note == controller.getCurrentNote())
+	    //   elem.className = 'active'
+	    // elem.lastChild.addEventListener('click', (function (noteCopy) {
+	    //   return function () {
+	    //     controller.setCurrentNote(noteCopy)
+	    //     NoteListView.render()
+	    //     NoteContentView.render()
+	    //   }
+	    // })(note))
+	    // elem.firstChild.lastChild.firstChild.addEventListener('click', (function (noteCopy) {
+	    //   return function () {
+	    //     controller.removeNote(noteCopy)
+	    //     NoteListView.render()
+	    //     NoteContentView.render()
+	    //   }
+	    // })(note))
+	    $noteList.appendChild(elem)
+	    return elem
 	  }
 	}
 
 
 /***/ },
 /* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var marked = __webpack_require__(7)
+	var $this = document.querySelector('.note-content')
+	var $name = $this.querySelector('article')
+	var $content = $this.querySelector('h1')
+	var $editNote = $this.querySelector('.edit-note')
+
+	module.exports = {
+	  $editNote: $editNote,
+	  render: function (note) {
+	    if (note) {
+	      $name.innerHTML = note.name
+	      $content.innerHTML = marked(note.content)
+	      $this.style.display = 'block'
+	    } else {
+	      this.clear()
+	    }
+	  },
+	  clear: function () {
+	    $this.style.display = 'none'
+	    $name.innerHTML = ''
+	    $content.innerHTML = ''
+	  }
+	}
+
+
+/***/ },
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -1689,6 +1673,166 @@
 	}());
 
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var model = __webpack_require__(2)
+	var NoteListView = __webpack_require__(5)
+	var NoteContentView = __webpack_require__(6)
+	var NoteEditView = __webpack_require__(9)
+
+	var bindEvt = function () {
+	  NoteListView.$noteList.addEventListener('click', function (e) {
+	    var target = e.currentTarget
+	    console.log(target)
+	    if (target.className === 'note-name') {
+	      var notes = model.getNotes()
+	      for (var index in notes) {
+	        var item = notes[index]
+	        if (item.name === target.firstChild.innerText) {
+	          model.setCurrentNote(item)
+	          NoteEditView.clear()
+	          NoteContentView.render(item)
+	          break
+	        }
+	      }
+	    }
+	  })
+
+	  NoteListView.$newNoteButton.addEventListener('click', function (e) {
+	    NoteContentView.clear()
+	    NoteEditView.render()
+	  })
+	}
+
+	module.exports = {
+	  init: function () {
+	    bindEvt()
+	  }
+	}
+
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	var $this = document.querySelector('.note-edit')
+	var $inputTitle = document.getElementById('input-title')
+	var $saveButton = document.getElementById('save-button')
+	var $cancelButton = document.getElementById('cancel-button')
+	var $editArea = document.getElementById('edit-area')
+
+	module.exports = {
+	  //   this.edit_area.onpropertychange = function () {
+	  //     this.style.height = this.scrollHeight + 'px';
+	  //   };
+	  //   this.edit_area.oninput = function () {
+	  //     this.style.height = this.scrollHeight + 'px';
+	  //   };
+	  // },
+	  $saveButton: $saveButton,
+	  $cancelButton: $cancelButton,
+	  $inputTitle: $inputTitle,
+	  $editArea: $editArea,
+	  editMode: false,
+	  render: function (note) {
+	    if (note) {
+	      $inputTitle.value = note.name
+	      $editArea.value = note.content
+	      this.editMode = true
+	    } else {
+	      this.editMode = false
+	    }
+	    $this.style.display = 'block'
+	    $inputTitle.focus()
+	  },
+	  clear: function () {
+	    $this.style.display = 'none'
+	  }
+	  // addNote: function () {
+	  //   this.save_button.onclick = function () {
+	  //     controller.addNote(NoteEditView.input_title.value, NoteEditView.edit_area.value);
+	  //     NoteListView.render();
+	  //     NoteContentView.render();
+	  //   };
+	  //   this.cancel_button.onclick = function () {
+	  //     NoteContentView.clear();
+	  //     NoteListView.render();
+	  //   };
+	  // },
+	  // editNote: function () {
+	  //   var note = controller.getCurrentNote();
+	  //   this.input_title.value = note.name;
+	  //   this.edit_area.value = note.content;
+	  //   this.save_button.onclick = function () {
+	  //     controller.updateNote(NoteEditView.input_title.value, NoteEditView.edit_area.value);
+	  //     NoteListView.render();
+	  //     NoteContentView.render();
+	  //   };
+	  //   this.cancel_button.onclick = function () {
+	  //     NoteContentView.render();
+	  //   };
+	  // }
+	}
+
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var model = __webpack_require__(2)
+	var NoteContentView = __webpack_require__(6)
+	var NoteEditView = __webpack_require__(9)
+
+	var bindEvt = function () {
+	  NoteContentView.$editNote.addEventListener('click', function () {
+	    NoteContentView.clear()
+	    NoteEditView.render(model.getCurrentNote())
+	  })
+	}
+
+	module.exports = {
+	  init: function () {
+	    bindEvt()
+	  }
+	}
+
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var model = __webpack_require__(2)
+	var NoteEditView = __webpack_require__(9)
+	var NoteContentView = __webpack_require__(6)
+	var NoteListView = __webpack_require__(5)
+
+	var bindEvt = function () {
+	  NoteEditView.$saveButton.addEventListener('click', function () {
+	    if (NoteEditView.editMode) {
+	      model.updateNote(NoteEditView.$inputTitle.value, NoteEditView.$editArea.value)
+	    } else {
+	      model.addNote(NoteEditView.$inputTitle.value, NoteEditView.$editArea.value)
+	    }
+	    NoteEditView.clear()
+	    NoteContentView.render(model.getCurrentNote())
+	    NoteListView.render(model.getNotes(), model.getCurrentTag())
+	  })
+
+	  NoteEditView.$cancelButton.addEventListener('click', function () {
+	    NoteEditView.clear()
+	    NoteContentView.render()
+	  })
+	}
+
+	module.exports = {
+	  init: function () {
+	    bindEvt()
+	  }
+	}
+
 
 /***/ }
 /******/ ]);
